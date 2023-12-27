@@ -36,22 +36,65 @@ nav {
   margin: 5px 0;
 }
 
-.book-list {
+.book-list,
+.read-books-list {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
   padding: 20px;
 }
 
+.read-books-list {
+  background-color: #f8f8f8;
+}
+
 .book-item {
   border: 1px solid #ddd;
   padding: 15px;
   text-align: center;
-  flex: 0 1 200px; /* Flex-grow: 0, Flex-shrink: 1, Flex-basis: 200px */
+  flex: 0 1 200px;
   box-sizing: border-box;
 }
 
 .book-item img {
   max-width: 100%;
   height: auto;
+}
+
+.read-books-list .book-item {
+  border-color: #c8e1ff;
+}
+
+.remove-btn {
+  background-color: #ff6666;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.remove-btn:hover {
+  background-color: #ff4d4d;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 20px;
+  margin: 20px;
+  font-size: 1.2em;
+  color: #555;
+  background-color: #f9f9f9;
+  border: 1px dashed #ddd;
+  border-radius: 5px;
+}
+
+.empty-state h2 {
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.empty-state p {
+  font-size: 1em;
+  color: #666;
 }

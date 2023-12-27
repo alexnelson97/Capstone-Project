@@ -1,18 +1,39 @@
+// Function to fetch and display books
 async function fetchBooks() {
   try {
-    const response = await fetch("http://localhost:3000/books");
+    const response = await fetch("http://localhost:3000/books"); // Adjust URL as needed
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const books = await response.json();
     displayBooks(books);
+    setupEventListeners(); // Setup listeners after books are displayed
   } catch (error) {
     console.error("Error fetching books:", error);
   }
 }
 
-function displayBooks(books) {
-  const bookList = document.querySelector(".book-list");
+// Function to fetch and display read books
+async function fetchReadBooks() {
+  try {
+    const response = await fetch("http://localhost:3000/books/read");
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const readBooks = await response.json();
+    console.log("Read books:", readBooks);
+    displayBooks(readBooks, true); // Add a parameter to distinguish read books
+  } catch (error) {
+    console.error("Error fetching read books:", error);
+  }
+}
+
+// Function to display books on booklist.html
+function displayBooks(books, isReadList = false) {
+  console.log("Displaying books. Read list:", isReadList);
+  const bookList = document.querySelector(
+    isReadList ? ".read-book-list" : ".book-list"
+  );
   if (bookList) {
     bookList.innerHTML = "";
 
@@ -25,13 +46,14 @@ function displayBooks(books) {
               <p>Author: ${book.author}</p>
               <p>Genre: ${book.genre}</p>
               <button class="remove-btn" data-book-id="${book.id}">Remove</button>
-    <button class="read-btn" data-book-id="${book.id}">Mark as Read</button>
+              <button class="read-btn" data-book-id="${book.id}">Mark as Read</button>
           `;
       bookList.appendChild(bookDiv);
     });
   }
 }
 
+// Function to handle book submission
 async function handleBookSubmission(event) {
   event.preventDefault();
 
@@ -55,16 +77,19 @@ async function handleBookSubmission(event) {
 
     const data = await response.json();
     console.log("Book added:", data);
+    fetchBooks();
   } catch (error) {
     console.error("Error adding book:", error);
   }
 }
 
+// Event listener for adding a book
 const addBookForm = document.getElementById("addBookForm");
 if (addBookForm) {
   addBookForm.addEventListener("submit", handleBookSubmission);
 }
 
+// Event listener for remove and mark as read buttons
 function setupEventListeners() {
   const bookList = document.querySelector(".book-list");
   if (bookList) {
@@ -80,7 +105,6 @@ function setupEventListeners() {
 }
 
 async function removeBook(bookId) {
-  console.log("test-remove:", bookId);
   try {
     const response = await fetch(`http://localhost:3000/books/${bookId}`, {
       method: "DELETE",
@@ -94,7 +118,7 @@ async function removeBook(bookId) {
 }
 
 async function markAsRead(bookId) {
-  console.log("test-mark as read:", bookId);
+  console.log(bookId);
   try {
     const response = await fetch(`http://localhost:3000/books/${bookId}/read`, {
       method: "PUT",
@@ -107,6 +131,13 @@ async function markAsRead(bookId) {
   }
 }
 
-if (window.location.pathname.endsWith("booklist.html")) {
-  document.addEventListener("DOMContentLoaded", fetchBooks);
-}
+// Fetch books when the page loads
+document.addEventListener("DOMContentLoaded", () => {
+  if (window.location.pathname.endsWith("booklist.html")) {
+    console.log("Fetching books for booklist");
+    fetchBooks();
+  } else if (window.location.pathname.endsWith("readbooks.html")) {
+    console.log("Fetching read books for readbooks list");
+    fetchReadBooks();
+  }
+});

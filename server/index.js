@@ -16,8 +16,9 @@ app.get("/", (req, res) => {
 
 app.get("/books", bookController.getAllBooks);
 app.post("/books", bookController.addBook);
-app.put("/books/:id/read", bookController.moveToReadList);
+app.put("/books/:id/read", bookController.markBookAsRead);
 app.delete("/books/:id", bookController.deleteBook);
+app.get("/books/read", bookController.getReadBooks);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
