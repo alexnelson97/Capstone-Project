@@ -1,4 +1,177 @@
+:root {
+  --primary-color: #4a4238; /* Coffee Brown */
+  --secondary-color: #a39171; /* Latte Cream */
+  --accent-color: #d2b48c; /* Light Coffee */
+  --text-color: #3e3e3e; /* Almost Black */
+  --background-color: #fdfaf6; /* Off White */
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Open+Sans:wght@400;700&display=swap");
+
 body {
+  font-family: "Open Sans", sans-serif;
+  color: var(--text-color);
+  background-color: var(--background-color);
+}
+
+h1,
+h2,
+h3 {
+  font-family: "Merriweather", serif;
+}
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 20px;
+}
+
+.title-image {
+  flex: 1;
+  max-width: 50%;
+  text-align: center;
+}
+
+.title-image img {
+  max-width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+}
+
+#addBookForm {
+  display: flex;
+  flex-direction: column;
+  max-width: 50%;
+  padding: 20px;
+}
+
+#addBookForm input,
+#addBookForm button {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  box-sizing: border-box;
+}
+
+#addBookForm button {
+  background-color: var(
+    --primary-color
+  ); /* Or another color that fits your theme */
+  color: white;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#addBookForm button:hover {
+  background-color: var(--accent-color); /* Slightly darker color on hover */
+}
+
+nav {
+  display: flex;
+  justify-content: space-around;
+  background-color: var(--primary-color);
+  padding: 10px;
+}
+
+nav a {
+  color: var(--secondary-color);
+  text-decoration: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+nav a:hover {
+  background-color: var(--accent-color);
+  color: var(--background-color);
+}
+
+.book-list,
+.read-books-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
+  justify-content: center; /* Center books for a cleaner look */
+}
+
+.book-item {
+  border: 1px solid var(--accent-color);
+  padding: 15px;
+  text-align: center;
+  flex: 0 1 200px;
+  box-sizing: border-box;
+  background-color: var(--secondary-color);
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 10px; /* Soft rounded corners */
+  margin: 10px;
+}
+
+.book-item img {
+  max-width: 100%;
+  height: auto;
+  border-bottom: 1px solid var(--accent-color); /* Separator for the image */
+}
+
+button {
+  border: none;
+  padding: 10px 15px;
+  margin-top: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 5px; /* Rounded corners for buttons */
+  transition: background-color 0.3s;
+}
+
+.remove-btn {
+  background-color: #c97b63; /* Warm Red */
+  color: var(--background-color);
+}
+
+.remove-btn:hover {
+  background-color: #b5654f; /* Darker Red */
+}
+
+.read-btn {
+  background-color: var(--primary-color);
+  color: var(--background-color);
+}
+
+.read-btn:hover {
+  background-color: #3d3930; /* Darker Brown */
+}
+
+.empty-state {
+  text-align: center;
+  padding: 20px;
+  margin: 20px auto;
+  font-size: 1.2em;
+  color: var(--text-color);
+  background-color: var(--background-color);
+  border: 1px dashed var(--accent-color);
+  border-radius: 10px;
+  max-width: 500px; /* Don't let the message stretch too wide */
+}
+
+@media (max-width: 768px) {
+  .book-item {
+    flex-basis: 100%; /* Full width on smaller screens */
+  }
+
+  nav {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  nav a {
+    margin-bottom: 5px;
+  }
+}
+
+/* body {
   font-family: Arial, sans-serif;
 }
 
@@ -20,10 +193,7 @@ nav {
   font-size: 2em;
 }
 
-.title-image img {
-  max-width: 100%;
-  height: auto;
-}
+
 
 #addBookForm {
   display: flex;
@@ -97,4 +267,4 @@ nav {
 .empty-state p {
   font-size: 1em;
   color: #666;
-}
+} */
