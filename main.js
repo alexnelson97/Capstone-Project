@@ -28,28 +28,48 @@ async function fetchReadBooks() {
   }
 }
 
-// Function to display books on booklist.html
+// Unified function to display books on booklist.html and readbooks.html
 function displayBooks(books, isReadList = false) {
   console.log("Displaying books. Read list:", isReadList);
-  const bookList = document.querySelector(
-    isReadList ? ".read-book-list" : ".book-list"
-  );
+  const bookListContainer = isReadList ? ".read-books-list" : ".book-list";
+  const bookList = document.querySelector(bookListContainer);
+
   if (bookList) {
     bookList.innerHTML = "";
 
-    books.forEach((book) => {
-      const bookDiv = document.createElement("div");
-      bookDiv.className = "book-item";
-      bookDiv.innerHTML = `
-              <img src="${book.image_url}" alt="Book Cover">
-              <h3>${book.title}</h3>
-              <p>Author: ${book.author}</p>
-              <p>Genre: ${book.genre}</p>
-              <button class="remove-btn" data-book-id="${book.id}">Remove</button>
-              <button class="read-btn" data-book-id="${book.id}">Mark as Read</button>
-          `;
-      bookList.appendChild(bookDiv);
-    });
+    if (books.length === 0) {
+      const emptyStateDiv = document.createElement("div");
+      emptyStateDiv.className = "empty-state";
+      emptyStateDiv.innerHTML = `
+        <h2>No Books Found</h2>
+        <p>${
+          isReadList
+            ? "Books that you mark as read will appear here. Start exploring and enjoy reading!"
+            : "No books available. Please add some books."
+        }</p>
+      `;
+      bookList.appendChild(emptyStateDiv);
+    } else {
+      books.forEach((book) => {
+        const bookDiv = document.createElement("div");
+        bookDiv.className = "book-item";
+        bookDiv.innerHTML = `
+          <img src="${book.image_url}" alt="Book Cover">
+          <h3>${book.title}</h3>
+          <p>Author: ${book.author}</p>
+          <p>Genre: ${book.genre}</p>
+          <button class="remove-btn" data-book-id="${book.id}">Remove</button>
+          ${
+            isReadList
+              ? ""
+              : `<button class="read-btn" data-book-id="${book.id}">Mark as Read</button>`
+          }
+        `;
+        bookList.appendChild(bookDiv);
+      });
+    }
+  } else {
+    console.error("Book list element not found on this page.");
   }
 }
 
