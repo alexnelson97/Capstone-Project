@@ -77,6 +77,19 @@ async function getReadBooks(req, res) {
   }
 }
 
+// Function to get all unread books
+async function getUnreadBooks(req, res) {
+  try {
+    const result = await pool.query(
+      "SELECT books.* FROM books JOIN user_books ON books.id = user_books.book_id WHERE user_books.status = 'unread'"
+    );
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server error");
+  }
+}
+
 // Function to mark book as read
 async function markBookAsRead(req, res) {
   try {
@@ -95,6 +108,7 @@ async function markBookAsRead(req, res) {
 module.exports = {
   getAllBooks,
   getReadBooks,
+  getUnreadBooks,
   addBook,
   deleteBook,
   markBookAsRead,

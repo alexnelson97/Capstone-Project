@@ -15,6 +15,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/books", bookController.getAllBooks);
+app.get("/books/unread", bookController.getUnreadBooks);
 app.post("/books", bookController.addBook);
 app.put("/books/:id/read", bookController.markBookAsRead);
 app.delete("/books/:id", bookController.deleteBook);
