@@ -140,18 +140,14 @@ async function removeBook(bookId, isReadList = false) {
     const response = await fetch(`http://localhost:3000/books/${bookId}`, {
       method: "DELETE",
     });
-    const data = await response.json();
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-    console.log("Server response:", data);
-    console.log(
-      `Book ID: ${bookId} removed from ${
-        isReadList ? "read list" : "book list"
-      }`
-    );
-    if (isReadList) {
-      fetchReadBooks();
-    } else {
-      fetchBooks();
+    console.log("Book removed");
+
+    const bookItem = document
+      .querySelector(`[data-book-id="${bookId}"]`)
+      .closest(".book-item");
+    if (bookItem) {
+      bookItem.remove();
     }
   } catch (error) {
     console.error("Error removing book:", error);
@@ -166,7 +162,6 @@ async function markAsRead(bookId) {
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
     console.log("Book marked as read");
 
-    // Find the book item and remove it if it exists
     const bookItemSelector = document.querySelector(
       `[data-book-id="${bookId}"]`
     );
